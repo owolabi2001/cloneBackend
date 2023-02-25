@@ -118,17 +118,7 @@ public class UserService implements UserDetailsService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-    public void sendSimpleMail(EmailDetails details) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-
-        simpleMailMessage.setFrom("noreply@prizepicks.com");
-        simpleMailMessage.setSubject("Hi,just learning how to send email");
-        simpleMailMessage.setText("hello");
-        simpleMailMessage.setTo(details.getRecipient());
-
-        javaMailSender.send(simpleMailMessage);
-
-    }
+//
 
 
 //    public void resetPassword(HttpServletRequest request,String userEmail){
@@ -171,4 +161,16 @@ public class UserService implements UserDetailsService {
 //        email.setFrom("noReply@gmail.com");
 //        return email;
 //    }
+
+    public void sendSimpleMail(EmailDetails details) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+        simpleMailMessage.setFrom("noreply@prizepicks.com");
+        simpleMailMessage.setSubject("Hi,just learning how to send email");
+        simpleMailMessage.setText("hello");
+        simpleMailMessage.setTo(details.getRecipient());
+
+        javaMailSender.send(simpleMailMessage);
+
+    }
 }

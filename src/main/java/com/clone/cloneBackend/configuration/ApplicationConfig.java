@@ -56,10 +56,11 @@ public class ApplicationConfig {
     public JavaMailSender JavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(465);
+        mailSender.setPort(587);
 
-        mailSender.setUsername("owolabitemiolamide@gmail.com");
-        mailSender.setPassword("avggnbftfbktgtrd");
+        mailSender.setUsername("tboyolamide@gmail.com");
+        mailSender.setPassword("yhohxcrwxacyduaf");
+
 
 
         Properties props = mailSender.getJavaMailProperties();
@@ -67,10 +68,25 @@ public class ApplicationConfig {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
+        props.put("mail.smtp.ssl.turst","*");
 
 
         return mailSender;
     }
+
+//    @Bean
+//    public JavaMailSender javaMailSender() {
+//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+//        mailSender.setHost("smtp.gmail.com");
+//        mailSender.setPort(587);
+//
+//        mailSender.setUsername("owolabitemiolamide@gmail.com");
+//        mailSender.setPassword("avggnbftfbktgtrd");
+//
+//        return mailSender;
+//    }
+
+
 
 
 
