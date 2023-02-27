@@ -22,9 +22,9 @@
 
 FROM openjdk:17-jdk-alpine AS build
 COPY . .
-RUN mvn clean package -DskipTests
+#RUN mvn clean package -DskipTests
 
-#RUN ./mvnw clean package
+RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-jdk-alpine
 COPY --from=build /target/cloneBackend-0.0.1-SNAPSHOT.jar demo.jar
