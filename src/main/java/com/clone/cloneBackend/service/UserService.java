@@ -13,7 +13,7 @@ import com.clone.cloneBackend.dto.response.GenericResponse;
 import com.clone.cloneBackend.repository.AppUserRepository;
 import com.clone.cloneBackend.repository.PasswordResetTokenRepository;
 import com.clone.cloneBackend.repository.TokenRepository;
-import jakarta.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -167,14 +167,18 @@ public class UserService implements UserDetailsService {
     public int sendSimpleMail(EmailDetails details) {
         log.info("Calling the sendSimpleMail service");
         AppUser user = userRepository.findAppUsersByEmail(details.getRecipient());
-        LocalDate dateCreated =  LocalDate.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date = dateCreated.format(dateTimeFormatter);
+
 
         if(user == null){
             return 0;
         }
         else{
+
+            LocalDate dateCreated =  LocalDate.now();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String date = dateCreated.format(dateTimeFormatter);
+
+
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             String link = "https://prizepick.onrender.com/api/v1/auth/resetpassword";
             String uid = UUID.randomUUID().toString();
@@ -197,7 +201,6 @@ public class UserService implements UserDetailsService {
 //        }
         PasswordResetToken token = new PasswordResetToken(uid,user,date);
         passwordTokenRepository.save(token);
-
 
     }
 }
