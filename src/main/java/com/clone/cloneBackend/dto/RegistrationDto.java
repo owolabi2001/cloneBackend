@@ -16,9 +16,10 @@ public class RegistrationDto {
     private String lastName;
     private String email;
     private String password;
+    private String gender;
+    private String phoneNumber;
     private String dateOfBirth;
     private String  address;
-    private String gender;
     private Role role;
 
 }

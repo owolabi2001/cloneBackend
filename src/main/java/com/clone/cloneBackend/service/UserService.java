@@ -71,6 +71,8 @@ public class UserService implements UserDetailsService {
                     .gender(registrationDto.getGender())
                     .dateOfBirth(registrationDto.getDateOfBirth())
                     .password(passwordEncoder.encode(registrationDto.getPassword()))
+                    .address(registrationDto.getAddress())
+                    .phoneNumber(registrationDto.getPhoneNumber())
                     .role(registrationDto.getRole())
                     .build();
             userRepository.save(user);

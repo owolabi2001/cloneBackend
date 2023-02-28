@@ -38,6 +38,7 @@ public class UserController {
             returnResponse.setRole(status.getRole());
             returnResponse.setAddress(status.getAddress());
 
+
             return new ResponseEntity<>(
                     new GenericResponse("00"
                             ,"Registration Successfull"
