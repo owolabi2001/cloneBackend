@@ -36,6 +36,7 @@ public class UserController {
             returnResponse.setPassword("saved");
             returnResponse.setDateOfBirth(status.getDateOfBirth());
             returnResponse.setRole(status.getRole());
+            returnResponse.setAddress(status.getAddress());
 
             return new ResponseEntity<>(
                     new GenericResponse("00"
@@ -66,11 +67,21 @@ public class UserController {
 
     @PostMapping(path = "/updatePassword")
     public ResponseEntity<GenericResponse> updatePasswordEmail(@RequestBody EmailDetails emailDetails){
-        userService.sendSimpleMail(emailDetails);
+        int status = userService.sendSimpleMail(emailDetails);
 
-        return new ResponseEntity<>(new GenericResponse("00",
-                "Message Sent",
-                null,null),HttpStatus.ACCEPTED);
+        if(status == 0){
+            return  new ResponseEntity<>(
+                    new GenericResponse("11","User not found",null,null)
+                    ,HttpStatus.CONTINUE
+                    );
+        }
+        else{
+            return new ResponseEntity<>(new GenericResponse("00",
+                    "Message Sent",
+                    null,null),HttpStatus.ACCEPTED);
+
+        }
+
     }
     public ResponseEntity<GenericResponse> updatePassword(){
         return new ResponseEntity<>(new GenericResponse(),HttpStatus.CONTINUE);

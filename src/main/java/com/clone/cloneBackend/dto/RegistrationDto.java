@@ -17,6 +17,7 @@ public class RegistrationDto {
     private String email;
     private String password;
     private String dateOfBirth;
+    private String  address;
     private String gender;
     private Role role;
 

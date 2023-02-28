@@ -25,6 +25,6 @@ public class PasswordResetToken {
 
     private String date;
 
-    public PasswordResetToken(String token, AppUser user) {
+    public PasswordResetToken(String token, AppUser user,String date) {
     }
 }

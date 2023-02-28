@@ -26,7 +26,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -162,15 +164,40 @@ public class UserService implements UserDetailsService {
 //        return email;
 //    }
 
-    public void sendSimpleMail(EmailDetails details) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+    public int sendSimpleMail(EmailDetails details) {
+        log.info("Calling the sendSimpleMail service");
+        AppUser user = userRepository.findAppUsersByEmail(details.getRecipient());
+        LocalDate dateCreated =  LocalDate.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateCreated.format(dateTimeFormatter);
 
-        simpleMailMessage.setFrom("noreply@prizepicks.com");
-        simpleMailMessage.setSubject("Hi,just learning how to send email");
-        simpleMailMessage.setText("hello");
-        simpleMailMessage.setTo(details.getRecipient());
+        if(user == null){
+            return 0;
+        }
+        else{
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            String link = "https://prizepick.onrender.com/api/v1/auth/resetpassword";
+            String uid = UUID.randomUUID().toString();
+            saveUUID(uid,user,date);
+            simpleMailMessage.setFrom("noreply@prizepicks.com");
+            simpleMailMessage.setSubject("Password Update");
+            simpleMailMessage.setText("Click this link to reset password "+ link + uid);
+            simpleMailMessage.setTo(details.getRecipient());
 
-        javaMailSender.send(simpleMailMessage);
+            javaMailSender.send(simpleMailMessage);
+            return 1;
+
+        }
+    }
+
+    public void saveUUID(String uid, AppUser user,String date){
+//        PasswordResetToken checkToken = passwordTokenRepository.findPasswordResetTokenByToken(uid);
+//        if(checkToken == null){
+//
+//        }
+        PasswordResetToken token = new PasswordResetToken(uid,user,date);
+        passwordTokenRepository.save(token);
+
 
     }
 }
