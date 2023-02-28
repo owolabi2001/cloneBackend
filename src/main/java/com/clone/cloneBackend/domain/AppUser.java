@@ -39,6 +39,8 @@ public class AppUser implements UserDetails {
     private String phoneNumber;
     @Column(name = "_date_of_birth")
     private String dateOfBirth;
+    @Column(name = "_address")
+    private String  address;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user")
