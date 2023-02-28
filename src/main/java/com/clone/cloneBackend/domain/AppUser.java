@@ -32,9 +32,9 @@ public class AppUser implements UserDetails {
     @Column(name = "email",unique = true,nullable = false)
     private String email;
     @Column(nullable = false)
-    private String gender;
-    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String gender;
     @Column(name = "phone_number")
     private String phoneNumber;
     @Column(name = "_date_of_birth")
