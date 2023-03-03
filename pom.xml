@@ -91,6 +91,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+<!--		<finalName>docker-spring-app</finalName>-->
 	</build>
 
 </project>
