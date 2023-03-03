@@ -205,4 +205,10 @@ public class UserService implements UserDetailsService {
         passwordTokenRepository.save(token);
 
     }
+
+    public void resetPassword(String token, String password) {
+        PasswordResetToken findToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
+        AppUser user = userRepository.findAppUsersById(findToken.getAppUser().getId());
+        userRepository.updateAppUserPassword(user.getId(),passwordEncoder.encode(password));
+    }
 }

@@ -20,7 +20,8 @@ public class PasswordResetToken {
 
     private String token;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "app_user_id",referencedColumnName = "id")
     private AppUser appUser;
 
     private String date;
