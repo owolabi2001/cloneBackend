@@ -187,7 +187,7 @@ public class UserService implements UserDetailsService {
             saveUUID(uid,user,date);
             simpleMailMessage.setFrom("noreply@prizepicks.com");
             simpleMailMessage.setSubject("Password Update");
-            simpleMailMessage.setText("Click this link to reset password "+ link +"/resetPassword/"+ uid);
+            simpleMailMessage.setText("Click this link to reset password "+ link +"resetPassword/"+ uid);
             simpleMailMessage.setTo(details.getRecipient());
 
             javaMailSender.send(simpleMailMessage);
