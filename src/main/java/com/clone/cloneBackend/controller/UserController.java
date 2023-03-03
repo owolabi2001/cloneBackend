@@ -85,9 +85,6 @@ public class UserController {
         }
 
     }
-    public ResponseEntity<GenericResponse> updatePassword(){
-        return new ResponseEntity<>(new GenericResponse(),HttpStatus.CONTINUE);
-    }
 
 
     @PostMapping(path = "/resetPassword/{token}")

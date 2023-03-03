@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 public class UpdatePasswordDto {
     private String password;
 
-
 }
