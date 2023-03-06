@@ -6,6 +6,7 @@ import com.clone.cloneBackend.domain.AppUser;
 import com.clone.cloneBackend.dto.AuthenticationDto;
 import com.clone.cloneBackend.dto.EmailDetails;
 import com.clone.cloneBackend.dto.RegistrationDto;
+import com.clone.cloneBackend.dto.UpdatePasswordDto;
 import com.clone.cloneBackend.dto.response.GenericResponse;
 
 import com.clone.cloneBackend.service.UserService;
@@ -84,20 +85,17 @@ public class UserController {
         }
 
     }
-    public ResponseEntity<GenericResponse> updatePassword(){
-        return new ResponseEntity<>(new GenericResponse(),HttpStatus.CONTINUE);
+
+
+    @PostMapping(path = "/resetPassword/{token}")
+    public ResponseEntity<GenericResponse> resetPassword
+            (@PathVariable String token, @RequestBody UpdatePasswordDto updatedpassword){
+
+        userService.resetPassword(token,updatedpassword.getPassword());
+        GenericResponse response = new GenericResponse();
+        response.setCode("00");
+        response.setMessage("Check your mail");
+        return new ResponseEntity<>(response,HttpStatus.CONTINUE);
     }
-
-
-//    @PostMapping(path = "/resetPassword")
-//    public ResponseEntity<GenericResponse> resetPassword
-//            (HttpServletRequest request, @RequestParam("email") String userEmail){
-//
-//        userService.resetPassword(request,userEmail);
-//        GenericResponse response = new GenericResponse();
-//        response.setCode("00");
-//        response.setMessage("Check your mail");
-//        return new ResponseEntity<>(response,HttpStatus.CONTINUE);
-//    }
 
 }

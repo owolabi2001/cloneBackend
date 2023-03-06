@@ -13,7 +13,7 @@ import com.clone.cloneBackend.dto.response.GenericResponse;
 import com.clone.cloneBackend.repository.AppUserRepository;
 import com.clone.cloneBackend.repository.PasswordResetTokenRepository;
 import com.clone.cloneBackend.repository.TokenRepository;
-import jakarta.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -169,21 +169,25 @@ public class UserService implements UserDetailsService {
     public int sendSimpleMail(EmailDetails details) {
         log.info("Calling the sendSimpleMail service");
         AppUser user = userRepository.findAppUsersByEmail(details.getRecipient());
-        LocalDate dateCreated =  LocalDate.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date = dateCreated.format(dateTimeFormatter);
 
         if(user == null){
+            log.info("Application User does not Exist");
             return 0;
         }
         else{
+            log.info("Application User Exists");
+            LocalDate dateCreated =  LocalDate.now();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String date = dateCreated.format(dateTimeFormatter);
+
+
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            String link = "https://prizepick.onrender.com/api/v1/auth/resetpassword";
+            String link = "https://clonebackend-production-ad72.up.railway.app/api/v1/auth/";
             String uid = UUID.randomUUID().toString();
             saveUUID(uid,user,date);
             simpleMailMessage.setFrom("noreply@prizepicks.com");
             simpleMailMessage.setSubject("Password Update");
-            simpleMailMessage.setText("Click this link to reset password "+ link + uid);
+            simpleMailMessage.setText("Click this link to reset password "+ link +"resetPassword/"+ uid);
             simpleMailMessage.setTo(details.getRecipient());
 
             javaMailSender.send(simpleMailMessage);
@@ -200,6 +204,11 @@ public class UserService implements UserDetailsService {
         PasswordResetToken token = new PasswordResetToken(uid,user,date);
         passwordTokenRepository.save(token);
 
+    }
 
+    public void resetPassword(String token, String password) {
+        PasswordResetToken findToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
+        AppUser user = userRepository.findAppUsersById(findToken.getAppUser().getId());
+        userRepository.updateAppUserPassword(user.getId(),passwordEncoder.encode(password));
     }
 }
