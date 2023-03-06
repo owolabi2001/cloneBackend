@@ -206,13 +206,18 @@ public class UserService implements UserDetailsService {
 //        }
         PasswordResetToken token = new PasswordResetToken(uid,user,date);
         passwordTokenRepository.save(token);
+        PasswordResetToken savedToken = passwordTokenRepository.findByToken(uid);
+        System.out.print("saved Token: "+savedToken);
 
     }
 
     public void resetPassword(String token, String password) {
         log.info("API to update password");
+        log.info("Token to find the password is "+ token);
         PasswordResetToken findToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
-        log.info("the findToken is" + findToken);
+        passwordTokenRepository.findByToken(token);
+
+        log.info("the findToken is " + findToken);
         log.info("userId: "+findToken.getAppUser().getId());
         AppUser user = userRepository.findAppUsersById(findToken.getAppUser().getId());
         userRepository.updateAppUserPassword(user.getId(),passwordEncoder.encode(password));
