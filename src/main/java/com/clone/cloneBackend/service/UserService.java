@@ -185,6 +185,7 @@ public class UserService implements UserDetailsService {
             String link = "https://clonebackend-9g4p.onrender.com/api/v1/auth/";
             String uid = UUID.randomUUID().toString();
             saveUUID(uid,user,date);
+            log.info("UUID saved");
             simpleMailMessage.setFrom("noreply@prizepicks.com");
             simpleMailMessage.setSubject("Password Update");
             simpleMailMessage.setText("Click this link to reset password "+ link +"resetPassword/"+ uid);
@@ -207,6 +208,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void resetPassword(String token, String password) {
+        log.info("API to update password");
         PasswordResetToken findToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
         AppUser user = userRepository.findAppUsersById(findToken.getAppUser().getId());
         userRepository.updateAppUserPassword(user.getId(),passwordEncoder.encode(password));

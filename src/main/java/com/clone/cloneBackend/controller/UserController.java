@@ -2,7 +2,7 @@ package com.clone.cloneBackend.controller;
 
 
 
-import com.clone.cloneBackend.domain.AppUser;
+
 import com.clone.cloneBackend.dto.AuthenticationDto;
 import com.clone.cloneBackend.dto.EmailDetails;
 import com.clone.cloneBackend.dto.RegistrationDto;
@@ -10,7 +10,6 @@ import com.clone.cloneBackend.dto.UpdatePasswordDto;
 import com.clone.cloneBackend.dto.response.GenericResponse;
 
 import com.clone.cloneBackend.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,11 +90,12 @@ public class UserController {
     public ResponseEntity<GenericResponse> resetPassword
             (@PathVariable String token, @RequestBody UpdatePasswordDto updatedpassword){
 
+
         userService.resetPassword(token,updatedpassword.getPassword());
         GenericResponse response = new GenericResponse();
         response.setCode("00");
         response.setMessage("Check your mail");
-        return new ResponseEntity<>(response,HttpStatus.CONTINUE);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 }
