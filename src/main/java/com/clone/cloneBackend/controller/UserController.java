@@ -74,7 +74,7 @@ public class UserController {
         if(status == 0){
             return  new ResponseEntity<>(
                     new GenericResponse("11","User not found",null,null)
-                    ,HttpStatus.CONTINUE
+                    ,HttpStatus.OK
                     );
         }
         else{
