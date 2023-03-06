@@ -212,6 +212,8 @@ public class UserService implements UserDetailsService {
     public void resetPassword(String token, String password) {
         log.info("API to update password");
         PasswordResetToken findToken = passwordTokenRepository.findPasswordResetTokenByToken(token);
+        log.info("the findToken is" + findToken);
+        log.info("userId: "+findToken.getAppUser().getId());
         AppUser user = userRepository.findAppUsersById(findToken.getAppUser().getId());
         userRepository.updateAppUserPassword(user.getId(),passwordEncoder.encode(password));
     }
