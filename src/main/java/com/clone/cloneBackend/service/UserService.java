@@ -101,6 +101,7 @@ public class UserService implements UserDetailsService {
     }
 
     private void saveUserToken(AppUser  user, String jwtToken) {
+        log.info("saveUserToken authentication method");
         var token = Token.builder()
                 .user(user)
                 .token(jwtToken)
@@ -112,6 +113,7 @@ public class UserService implements UserDetailsService {
     }
 
     private void revokeAllUserTokens(AppUser user) {
+        log.info("revoke all user tokens method");
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;
