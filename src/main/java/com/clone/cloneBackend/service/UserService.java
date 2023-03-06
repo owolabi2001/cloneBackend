@@ -182,7 +182,7 @@ public class UserService implements UserDetailsService {
 
 
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            String link = "https://clonebackend-production-ad72.up.railway.app/api/v1/auth/";
+            String link = "https://clonebackend-9g4p.onrender.com/api/v1/auth/";
             String uid = UUID.randomUUID().toString();
             saveUUID(uid,user,date);
             simpleMailMessage.setFrom("noreply@prizepicks.com");
