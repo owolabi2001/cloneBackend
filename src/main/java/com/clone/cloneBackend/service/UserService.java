@@ -170,12 +170,12 @@ public class UserService implements UserDetailsService {
         log.info("Calling the sendSimpleMail service");
         AppUser user = userRepository.findAppUsersByEmail(details.getRecipient());
 
-
         if(user == null){
+            log.info("Application User does not Exist");
             return 0;
         }
         else{
-
+            log.info("Application User Exists");
             LocalDate dateCreated =  LocalDate.now();
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String date = dateCreated.format(dateTimeFormatter);
